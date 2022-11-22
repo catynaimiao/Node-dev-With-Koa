@@ -4,20 +4,33 @@
 
 ## 说明
 
-- 增加了 `dotenv` 
-- 推荐使用 `apifox` ，生成该模板项目的 `接口文档.md`；
+- typescript
+- dotnev
+- mongodb
+- 跨域请求处理
+- log记录
+- jwt公私路由
+- koa常用中间件
+- 没有采用node-mon，而是使用了node-dev
+- 一个简单的用户示例
 
 ## 启动
 
-安装依赖
+### 安装依赖
+
 ```shell
 npm i 
 ```
 
-启动开发环境
+### 启动开发环境
+
 ```shell
 npm run start
 ```
+
+### 部署使用
+
+`pm2`
 
 ## 相关链接
 
