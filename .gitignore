@@ -1,2 +1,7 @@
 # node
 node_modules
+Temp
+# 文件
+.vscode
+.gitignore
+package-lock.json

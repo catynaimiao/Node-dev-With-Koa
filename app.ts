@@ -1,18 +1,21 @@
 import * as Koa from "koa";
-import * as Router from "koa-router";
 import * as bodyParser from "koa-bodyparser";
-import { name, port } from "./config";
-import AppRoutes from "./src/routers";
+import { connectToDatabase } from "./src/services/database.service";
+import * as Router from "koa-router";
+
+import router from "./src/routers";
+require("dotenv").config();
 
 const app = new Koa();
-const router = new Router();
+connectToDatabase().then(() => {
+  app.use(bodyParser());
+  app.use(router.routes());
+  app.use(router.allowedMethods());
+  app.listen(process.env.PROJECT_PORT || 3000);
 
-//路由
-AppRoutes.forEach((route) => router[route.method](route.path, route.action));
-
-app.use(bodyParser());
-app.use(router.routes());
-app.use(router.allowedMethods());
-app.listen(port);
-
-console.log(`[${name}]has serviced at http://localhost:${port}`);
+  console.log(
+    `[${process.env.PROJECT_NAME}]has serviced at http://localhost:${
+      process.env.PROJECT_PORT || 3000
+    }`
+  );
+});

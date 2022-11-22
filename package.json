@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node-dev app.ts",
+    "test": "node test.ts",
+    "start": "node-dev app.ts",
     "build": "webpack"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-router": "^7.4.4",
+    "express": "^4.18.2",
     "node-dev": "^7.4.3",
     "nodemon": "^2.0.20",
     "pm2": "^5.2.2",
