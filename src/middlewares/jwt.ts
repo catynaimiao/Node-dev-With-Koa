@@ -6,9 +6,9 @@ import config from "../../config";
 
 // jwt鉴权
 
-export const signToken: Koa.Middleware = (ctx, next) => {
+// 签名
+export const signToken = (data,next) => {
   try {
-    const data = ctx.request.body;
     return jwt.sign(
       {
         data: data,
@@ -22,6 +22,7 @@ export const signToken: Koa.Middleware = (ctx, next) => {
   next();
 };
 
+// 验证
 export const verifyToken: Koa.Middleware = async (ctx, next) => {
   try {
     ctx.jwtData = await jwt.verify(
@@ -30,6 +31,6 @@ export const verifyToken: Koa.Middleware = async (ctx, next) => {
     );
     await next();
   } catch (err) {
-    throw { code: 401, message: err.message };
+    throw { code: 401, message: "未登录" };
   }
 };

@@ -16,6 +16,7 @@ userPublicRouter.post("/login", controllers.login);
 // 私有路由
 const userPrivateRouter = new Router();
 userPrivateRouter.use(jwt.verifyToken);
+
 userPrivateRouter.get("/login", controllers.testlogin);
 // 导出
 userRouter.use(

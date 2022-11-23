@@ -1,14 +1,14 @@
 const config = {
   origin: function (ctx) {
     //设置允许来自指定域名请求
-    const whiteList = ["localhost:3000","127.0.0.1"]; //可跨域白名单
+    const whiteList = ["127.0.0.1:5500","127.0.0.1"]; //可跨域白名单
 
     let url = ctx.header.host;
     if (whiteList.includes(url)) {
       return url; //注意，这里域名末尾不能带/，否则不成功，所以在之前我把/通过substr干掉了
     }
     
-    return "http://localhost::3000"; //默认允许本地请求3000端口可跨域
+    return "http://localhost:5500"; //默认允许本地请求5500端口可跨域
   },
   maxAge: 5, //指定本次预检请求的有效期，单位为秒。
   credentials: true, //是否允许发送Cookie

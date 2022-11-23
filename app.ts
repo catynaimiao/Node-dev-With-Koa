@@ -6,6 +6,7 @@ import * as helmet from "koa-helmet";
 const cors = require("koa2-cors");
 // 中间件
 import { logInfo } from "./src/middlewares/logger";
+import { error } from "./src/middlewares/response";
 import router from "./src/routers";
 // 数据库service
 import { connectToDatabase } from "./src/services/database.service";
@@ -17,6 +18,8 @@ const app = new Koa();
 
 // 日志中间件加载
 app.use(logInfo);
+
+app.use(error); // 统一异常处理管理
 
 // 内核中间件
 app.use(bodyParser()); // Post请求中间件

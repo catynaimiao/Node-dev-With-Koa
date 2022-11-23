@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb";
 import { collections } from "../services/database.service";
 import * as jwt from "../middlewares/jwt";
 import User from "../models/user";
+import userService from "../services/userService";
 // koa 内核
 import * as Router from "koa-router";
 
@@ -16,19 +17,18 @@ import * as Router from "koa-router";
  * @param next
  */
 export const login = async (ctx: Router.RouterContext, next) => {
-  try {
-    const { phone, password } = ctx.request.body as User;
+  const { phone, password } = ctx.request.body as User;
+  if (!phone || !password) {
+    const error = new Error("用户或密码不能为空");
+    throw { code: 500, message: "用户或密码不能为空" };
+  }
+  const user = await userService.login(phone, password);
 
-    const user = await collections.users.findOne({
-      phone,
-      password,
-    });
-
+  if (user) {
     ctx.status = 200;
-    ctx.body = user;
-  } catch (error) {
-    console.error(error);
-    ctx.status = 500;
+    ctx.body = { code: 200, result: { jwt: jwt.signToken(user, next) } };
+  } else {
+    throw { code: 500, message: "账号密码错误，或用户不存在。" };
   }
 };
 
@@ -36,17 +36,14 @@ export const login = async (ctx: Router.RouterContext, next) => {
  * 用户登录GET请求测试
  * /api/v1/login
  * GET
- * @param ctx 
- * @param next 
+ * @param ctx
+ * @param next
  */
 export const testlogin = async (ctx: Router.RouterContext, next) => {
-  try {
-    ctx.status = 200;
-    ctx.body = {
-      message: "ok",
-    };
-  } catch (error) {
-    console.error(error);
-    ctx.status = 500;
-  }
+  //await next();
+  ctx.status = 200;
+  ctx.body = {
+    code: 200,
+    result: "ok",
+  };
 };
