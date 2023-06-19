@@ -23,4 +23,4 @@ npm i
 npm run start
 ```
 
-then just edit the index.ts and request backend.
+then just edit the app.ts and request backend.
